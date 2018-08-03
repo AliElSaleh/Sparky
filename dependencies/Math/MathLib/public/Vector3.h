@@ -1,4 +1,7 @@
 #pragma once
+
+#include <iostream>
+
 class Vector3
 {
 public:
@@ -14,6 +17,7 @@ public:
 
 	Vector3 operator + (const Vector3 &rhs) const;
 	Vector3 &operator += (const Vector3 &rhs);
+	Vector3 &operator += (const float &rhs);
 	Vector3 operator - (const Vector3 &rhs) const;
 	Vector3 operator - () const;
 	Vector3 &operator -= (const Vector3 &rhs);
@@ -38,6 +42,7 @@ public:
 	Vector3 Cross(const Vector3 &rhs) const;
 	static Vector3 Cross(const Vector3 &upVector, const Vector3 &zAxis);
 
+	friend std::ostream &operator <<(std::ostream &stream, const Vector3 vector);
 };
 
 Vector3 operator*(const float lhs, const Vector3 &rhs);

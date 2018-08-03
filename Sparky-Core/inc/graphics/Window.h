@@ -3,7 +3,7 @@
 #include <glfw3.h>
 #include <iostream>
 
-#include "Vector2.h"
+#include "../maths/maths.h"
 
 namespace sparky
 {

@@ -30,6 +30,7 @@ public:
 	float Rotation() const;
 
 	float Dot(const Vector4 &rhs) const;
+	friend std::ostream &operator <<(std::ostream &stream, const Vector4 vector);
 };
 
 Vector4 operator*(const float lhs, const Vector4 &rhs);
