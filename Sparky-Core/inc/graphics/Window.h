@@ -3,6 +3,8 @@
 #include <glfw3.h>
 #include <iostream>
 
+#include "Vector2.h"
+
 namespace sparky
 {
 	namespace graphics
@@ -27,7 +29,7 @@ namespace sparky
 
 			bool isKeyPressed(unsigned int keyCode) const;
 			bool isMouseButtonPressed(unsigned int button) const;
-			void getMousePosition(double &x, double &y) const;
+			void getMousePosition(float &x, float &y) const;
 		
 		private:
 			friend struct GLFWwindow;

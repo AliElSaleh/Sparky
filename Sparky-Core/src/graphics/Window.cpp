@@ -69,7 +69,7 @@ namespace sparky
 			return mMouseButtons[button];
 		}
 
-		void Window::getMousePosition(double & x, double & y) const
+		void Window::getMousePosition(float &x, float &y) const
 		{
 			x = mX;
 			y = mY;

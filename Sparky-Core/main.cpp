@@ -16,7 +16,7 @@ int main()
 	{
 		window.Clear();
 		
-		double x, y;
+		float x, y;
 		window.getMousePosition(x, y);
 		std::cout << x << ", " << y << std::endl;
 
