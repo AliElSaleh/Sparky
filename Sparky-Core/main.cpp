@@ -16,14 +16,18 @@ int main()
 	{
 		window.Clear();
 		
-		//glBegin(GL_QUADS);
-		//glVertex2d(-0.5, -0.5);
-		//glVertex2d(-0.5,  0.5);
-		//glVertex2d( 0.5,  0.5);
-		//glVertex2d( 0.5, -0.5);
-		//glEnd();
+		double x, y;
+		window.getMousePosition(x, y);
+		std::cout << x << ", " << y << std::endl;
 
-		glDrawArrays(GL_ARRAY_BUFFER, 0, 0);
+		glBegin(GL_QUADS);
+		glVertex2d(-0.5, -0.5);
+		glVertex2d(-0.5,  0.5);
+		glVertex2d( 0.5,  0.5);
+		glVertex2d( 0.5, -0.5);
+		glEnd();
+
+		//glDrawArrays(GL_ARRAY_BUFFER, 0, 0);
 
 		window.Update();
 	}

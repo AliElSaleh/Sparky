@@ -4,7 +4,10 @@ namespace sparky
 {
 	namespace graphics
 	{
-		void WindowResize(GLFWwindow *window, int width, int height);
+		void window_resize(GLFWwindow *window, int width, int height);
+		void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+		void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+		void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
 
 		Window::Window()
 		{
@@ -13,11 +16,17 @@ namespace sparky
 
 		Window::Window(const char *name, int width, int height)
 		{
-			m_Title = name;
+			mTitle = name;
 			m_Width = width;
-			m_Height = height;
+			mHeight = height;
 			if (!Init())
 				glfwTerminate();
+
+			for (int i = 0; i < MAX_KEYS; i++)
+				mKeys[i] = false;
+
+			for (int i = 0; i < MAX_BUTTONS; i++)
+				mMouseButtons[i] = false;
 		}
 
 		Window::~Window()
@@ -28,18 +37,42 @@ namespace sparky
 		void Window::Update()
 		{
 			glfwPollEvents();
-			glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
-			glfwSwapBuffers(m_Window);
+			glfwGetFramebufferSize(mWindow, &m_Width, &mHeight);
+			glfwSwapBuffers(mWindow);
 		}
 
 		bool Window::Closed() const
 		{
-			return glfwWindowShouldClose(m_Window) == 1;
+			return glfwWindowShouldClose(mWindow) == 1;
 		}
 
 		void Window::Clear() const
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		}
+
+		bool Window::isKeyPressed(unsigned int keyCode) const
+		{
+			// TODO: Log this
+			if (keyCode >= MAX_KEYS)
+				return false;
+
+			return mKeys[keyCode];
+		}
+
+		bool Window::isMouseButtonPressed(unsigned int button) const
+		{
+			// TODO: Log this
+			if (button >= MAX_BUTTONS)
+				return false;
+
+			return mMouseButtons[button];
+		}
+
+		void Window::getMousePosition(double & x, double & y) const
+		{
+			x = mX;
+			y = mY;
 		}
 
 		bool Window::Init()
@@ -50,17 +83,21 @@ namespace sparky
 				return false;
 			}
 
-			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
+			mWindow = glfwCreateWindow(m_Width, mHeight, mTitle, NULL, NULL);
 			
-			if (!m_Window)
+			if (!mWindow)
 			{
 				glfwTerminate();
 				std::cout << "Failed to create GLFW window!" << std::endl;
 				return false;
 			} 
 
-			glfwMakeContextCurrent(m_Window);
-			glfwSetWindowSizeCallback(m_Window, WindowResize);
+			glfwMakeContextCurrent(mWindow);
+			glfwSetWindowUserPointer(mWindow, this);
+			glfwSetWindowSizeCallback(mWindow, window_resize);
+			glfwSetKeyCallback(mWindow, key_callback);
+			glfwSetMouseButtonCallback(mWindow, mouse_button_callback);
+			glfwSetCursorPosCallback(mWindow, cursor_position_callback);
 		
 
 			if (glewInit() != GLEW_OK)
@@ -74,10 +111,30 @@ namespace sparky
 			return true;
 		}
 
-		void WindowResize(GLFWwindow *window, int width, int height)
+		void window_resize(GLFWwindow *window, int width, int height)
 		{
 			glViewport(0, 0, width, height);
 		}
+
+		void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+		{
+			Window *win = (Window*)glfwGetWindowUserPointer(window);
+			win->mKeys[key] = action != GLFW_RELEASE;
+		}
+
+		void mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
+		{
+			Window *win = (Window*)glfwGetWindowUserPointer(window);
+			win->mMouseButtons[button] = action != GLFW_RELEASE;
+		}
+
+		void cursor_position_callback(GLFWwindow * window, double xpos, double ypos)
+		{
+			Window *win = (Window*)glfwGetWindowUserPointer(window);
+			win->mX = xpos;
+			win->mY = ypos;
+		}
+
 	}
 }
 
