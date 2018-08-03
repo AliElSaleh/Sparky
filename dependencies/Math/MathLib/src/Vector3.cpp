@@ -9,6 +9,7 @@ Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z)
 {
 
 }
+
 Vector3 Vector3::Right(1, 0, 0);
 Vector3 Vector3::Up(0, 1, 0);
 Vector3 Vector3::Forward(0, 0, 1);
@@ -23,6 +24,14 @@ Vector3 &Vector3::operator += (const Vector3 & rhs)
 	x += rhs.x;
 	y += rhs.y;
 	z += rhs.z;
+	return *this;
+}
+
+Vector3 &Vector3::operator+=(const float &rhs)
+{
+	x += rhs;
+	y += rhs;
+	z += rhs;
 	return *this;
 }
 
@@ -47,6 +56,12 @@ Vector3 &Vector3::operator -= (const Vector3 & rhs)
 Vector3 Vector3::operator * (const float & rhs) const
 {
 	return Vector3(rhs * x, rhs * y, rhs * z);
+}
+
+std::ostream & operator<<(std::ostream &stream, const Vector3 vector)
+{
+	stream << "Vector3: (" << vector.x << ", " << vector.y << ", " << vector.z << ")";
+	return stream;
 }
 
 Vector3 operator*(const float lhs, const Vector3 &rhs)
@@ -156,4 +171,10 @@ Vector3 Vector3::Cross(const Vector3 &rhs) const
 Vector3 Vector3::Cross(const Vector3 & upVector, const Vector3 & zAxis)
 {
 	return Vector3((upVector * zAxis.z - upVector * zAxis.y).x, (upVector * zAxis.x - zAxis.x * upVector).y, (upVector * zAxis.y - upVector * zAxis.x).z);
+}
+
+std::ostream &operator <<(std::ostream stream, const Vector3 vector)
+{
+	stream << "Vector3: (" << vector.x << ", " << vector.y << ", " << vector.z << ")";
+	return stream;
 }

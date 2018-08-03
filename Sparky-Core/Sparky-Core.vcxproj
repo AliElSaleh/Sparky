@@ -86,6 +86,7 @@
     <LibraryPath>$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib-vc2015;$(SolutionDir)bin\$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
+    <SourcePath>$(SolutionDir)dependencies\Math\MathLib\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)dependencies\GLEW\include;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependecies\Math\include;$(IncludePath)</IncludePath>

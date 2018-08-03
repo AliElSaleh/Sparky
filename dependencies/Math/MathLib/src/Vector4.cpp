@@ -44,6 +44,12 @@ Vector4 Vector4::operator*(const float & rhs) const
 	return Vector4(rhs * x, rhs * y, rhs * z, rhs * w);
 }
 
+std::ostream & operator<<(std::ostream & stream, const Vector4 vector)
+{
+	std::cout << "Vector4: (" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << ")";
+	return stream;
+}
+
 Vector4 operator*(const float lhs, const Vector4 & rhs)
 {
 	return Vector4(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
@@ -131,4 +137,3 @@ float Vector4::Dot(const Vector4 &rhs) const
 {
 	return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
 }
-

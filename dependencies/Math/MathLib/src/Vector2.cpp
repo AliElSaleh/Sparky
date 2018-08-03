@@ -59,7 +59,7 @@ Vector2 Vector2::operator*(const float & rhs) const
 
 std::ostream & operator<<(std::ostream &stream, const Vector2 vector)
 {
-	std::cout << "Vector2: (" << vector.x << ", " << vector.y << ")";
+	stream << "Vector2: (" << vector.x << ", " << vector.y << ")";
 	return stream;
 }
 
