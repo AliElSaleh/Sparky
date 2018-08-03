@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class Vector2
 {
@@ -8,7 +9,6 @@ public:
 public:
 	Vector2();
 	Vector2(float x, float y);
-	Vector2(const float &x, const float &y);
 
 	Vector2 operator + (const Vector2 &rhs) const;
 	Vector2 operator + (const float &rhs) const;
@@ -42,6 +42,7 @@ public:
 	
 	float Dot(const Vector2 &rhs) const;
 
+	friend std::ostream &operator <<(std::ostream &stream, const Vector2 vector);
 };
 
 Vector2 operator*(const float lhs, const Vector2 &rhs);

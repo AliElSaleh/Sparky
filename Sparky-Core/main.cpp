@@ -12,10 +12,14 @@ int main()
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
+	Vector2 vector = Vector2(1, 2);
+
 	while (!window.Closed())
 	{
 		window.Clear();
 		
+		std::cout << vector << std::endl;
+
 		float x, y;
 		window.getMousePosition(x, y);
 		std::cout << x << ", " << y << std::endl;
