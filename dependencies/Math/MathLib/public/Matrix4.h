@@ -32,6 +32,11 @@ public:
 
 		struct
 		{
+			Vector4 columns[4];
+		};
+
+		struct
+		{
 			Vector2 right;		unsigned int : 32;
 			Vector2 up;			unsigned int : 32;
 			Vector2 position;	unsigned int : 32;

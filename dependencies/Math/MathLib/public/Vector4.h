@@ -7,7 +7,7 @@ public:
 	float x, y, z, w;
 
 public:
-	Vector4();
+	Vector4() = default;
 	Vector4(float x, float y, float z, float w);
 		  
 	Vector4 operator + (const Vector4 &rhs) const;

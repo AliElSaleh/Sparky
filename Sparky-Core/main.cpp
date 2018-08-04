@@ -16,6 +16,14 @@ int main()
 	Vector3 vector3d(1, 2, 3);
 	Vector4 color(1, 2, 3, 4);
 
+	Matrix4 position = Matrix4::MakeTranslation(Vector3(2, 3, 4));
+	position *= Matrix4::MakeIdentity();
+
+	position.elements[12] = 2.0f;
+
+	Vector4 c0 = position.columns[3];
+	std::cout << c0 << std::endl;
+
 	while (!window.Closed())
 	{
 		window.Clear();
