@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class Vector4
 {
@@ -30,6 +31,7 @@ public:
 	float Rotation() const;
 
 	float Dot(const Vector4 &rhs) const;
+
 	friend std::ostream &operator <<(std::ostream &stream, const Vector4 vector);
 };
 

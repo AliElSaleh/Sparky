@@ -16,9 +16,6 @@ int main()
 	Vector3 vector3d(1, 2, 3);
 	Vector4 color(1, 2, 3, 4);
 
-	vector2d += 10;
-	vector3d += 5;
-
 	while (!window.Closed())
 	{
 		window.Clear();
