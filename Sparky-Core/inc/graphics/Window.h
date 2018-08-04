@@ -1,9 +1,6 @@
 #pragma once
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include <glfw3.h>
-#include <iostream>
-
-#include "../maths/maths.h"
 
 namespace sparky
 {
@@ -20,16 +17,16 @@ namespace sparky
 			Window(const char *name, int width, int height);
 			~Window();
 
-			void Clear() const;
+			static void Clear();
 			void Update();
 			bool Closed() const;
 
-			inline int GetWidth() const { return m_Width; };
-			inline int GetHeight() const { return mHeight; };
+			int GetWidth() const { return m_Width; };
+			int GetHeight() const { return mHeight; };
 
 			bool isKeyPressed(unsigned int keyCode) const;
 			bool isMouseButtonPressed(unsigned int button) const;
-			void getMousePosition(float &x, float &y) const;
+			void getMousePosition(double &x, double &y) const;
 		
 		private:
 			friend struct GLFWwindow;

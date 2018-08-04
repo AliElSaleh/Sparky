@@ -1,4 +1,6 @@
-#include "..\..\inc\graphics\Window.h"
+#include "../../inc/graphics/Window.h"
+
+#include <iostream>
 
 namespace sparky
 {
@@ -9,12 +11,11 @@ namespace sparky
 		void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 		void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
 
-		Window::Window()
+		Window::Window(): mTitle(nullptr), m_Width(1280), mHeight(720), mClosed(false), mWindow(nullptr), mKeys{}, mMouseButtons{}, mX(0), mY(0)
 		{
-
 		}
 
-		Window::Window(const char *name, int width, int height)
+		Window::Window(const char *name, const int width, const int height)
 		{
 			mTitle = name;
 			m_Width = width;
@@ -46,12 +47,12 @@ namespace sparky
 			return glfwWindowShouldClose(mWindow) == 1;
 		}
 
-		void Window::Clear() const
+		void Window::Clear()
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		bool Window::isKeyPressed(unsigned int keyCode) const
+		bool Window::isKeyPressed(const unsigned int keyCode) const
 		{
 			// TODO: Log this
 			if (keyCode >= MAX_KEYS)
@@ -60,7 +61,7 @@ namespace sparky
 			return mKeys[keyCode];
 		}
 
-		bool Window::isMouseButtonPressed(unsigned int button) const
+		bool Window::isMouseButtonPressed(const unsigned int button) const
 		{
 			// TODO: Log this
 			if (button >= MAX_BUTTONS)
@@ -69,7 +70,7 @@ namespace sparky
 			return mMouseButtons[button];
 		}
 
-		void Window::getMousePosition(float &x, float &y) const
+		void Window::getMousePosition(double &x, double &y) const
 		{
 			x = mX;
 			y = mY;
@@ -83,7 +84,7 @@ namespace sparky
 				return false;
 			}
 
-			mWindow = glfwCreateWindow(m_Width, mHeight, mTitle, NULL, NULL);
+			mWindow = glfwCreateWindow(m_Width, mHeight, mTitle, nullptr, nullptr);
 			
 			if (!mWindow)
 			{
@@ -111,26 +112,26 @@ namespace sparky
 			return true;
 		}
 
-		void window_resize(GLFWwindow *window, int width, int height)
+		void window_resize(GLFWwindow *window, const int width, const int height)
 		{
 			glViewport(0, 0, width, height);
 		}
 
-		void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+		void key_callback(GLFWwindow *window, const int key, int scancode, const int action, int mods)
 		{
-			Window *win = (Window*)glfwGetWindowUserPointer(window);
+			Window *win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 			win->mKeys[key] = action != GLFW_RELEASE;
 		}
 
-		void mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
+		void mouse_button_callback(GLFWwindow * window, const int button, const int action, int mods)
 		{
-			Window *win = (Window*)glfwGetWindowUserPointer(window);
+			Window *win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 			win->mMouseButtons[button] = action != GLFW_RELEASE;
 		}
 
-		void cursor_position_callback(GLFWwindow * window, double xpos, double ypos)
+		void cursor_position_callback(GLFWwindow * window, const double xpos, const double ypos)
 		{
-			Window *win = (Window*)glfwGetWindowUserPointer(window);
+			Window *win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 			win->mX = xpos;
 			win->mY = ypos;
 		}

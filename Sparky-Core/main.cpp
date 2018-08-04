@@ -1,4 +1,5 @@
-#include "inc\graphics\Window.h"
+#include "inc/graphics/Window.h"
+#include "inc/maths/maths.h"
 
 int main()
 {
@@ -6,22 +7,20 @@ int main()
 	using namespace graphics;
 
 	Window window("Sparky", 1280, 720);
-	glClearColor(0.2, 0.3, 0.8, 1);
+	glClearColor(static_cast<GLclampf>(0.2), static_cast<GLclampf>(0.3), static_cast<GLclampf>(0.8), static_cast<GLclampf>(1));
 
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	Vector2 vector2d(1, 2);
-	Vector3 vector3d(1, 2, 3);
-	Vector4 color(1, 2, 3, 4);
+	const Vector2 vector2d(1, 2);
 
 	Matrix4 position = Matrix4::MakeTranslation(Vector3(2, 3, 4));
 	position *= Matrix4::MakeIdentity();
 
 	position.elements[12] = 2.0f;
 
-	Vector4 c0 = position.columns[3];
+	const Vector4 c0 = position.columns[3];
 	std::cout << c0 << std::endl;
 
 	while (!window.Closed())
@@ -30,7 +29,7 @@ int main()
 		
 		std::cout << vector2d << std::endl;
 
-		float x, y;
+		double x, y;
 		window.getMousePosition(x, y);
 		std::cout << x << ", " << y << std::endl;
 
