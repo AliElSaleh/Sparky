@@ -152,12 +152,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\graphics\Shader.h" />
     <ClInclude Include="inc\graphics\Window.h" />
     <ClInclude Include="inc\maths\maths.h" />
+    <ClInclude Include="Utils\FileUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\graphics\basic.frag" />
+    <None Include="src\graphics\basic.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
