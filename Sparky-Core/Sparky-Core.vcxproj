@@ -152,11 +152,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\buffers\Buffer.cpp" />
+    <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
+    <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\graphics\buffers\Buffer.h" />
+    <ClInclude Include="inc\graphics\buffers\IndexBuffer.h" />
+    <ClInclude Include="inc\graphics\buffers\VertexArray.h" />
     <ClInclude Include="inc\graphics\Shader.h" />
     <ClInclude Include="inc\graphics\Window.h" />
     <ClInclude Include="inc\maths\maths.h" />

@@ -37,6 +37,12 @@ namespace sparky
 
 		void Window::Update()
 		{
+			const GLenum error = glGetError();
+			if (error != GL_NO_ERROR)
+			{
+				std::cout << "OpenGL Error: " << error << std::endl;
+			}
+
 			glfwPollEvents();
 			glfwGetFramebufferSize(mWindow, &m_Width, &mHeight);
 			glfwSwapBuffers(mWindow);
