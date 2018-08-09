@@ -12,7 +12,7 @@ int main()
 	using namespace maths;
 
 	Window window("Sparky", 1280, 720);
-	glClearColor(static_cast<GLclampf>(0.0f), static_cast<GLclampf>(0.0f), static_cast<GLclampf>(0.0f), static_cast<GLclampf>(1.0f));
+	glClearColor(GLclampf(0.0f),GLclampf(0.0f), GLclampf(0.0f), GLclampf(1.0f));
 
 	GLfloat vertices[] =
 	{
