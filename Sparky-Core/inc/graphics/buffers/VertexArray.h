@@ -12,16 +12,26 @@ namespace sparky
 		class VertexArray
 		{
 		public:
-			VertexArray();
+			// Default
+			VertexArray() noexcept; 
+
+			// Copy
+			VertexArray(const VertexArray &other);
+			VertexArray &operator=(const VertexArray &other) noexcept;
+
+			// Move
+			VertexArray(VertexArray &&other) noexcept;
+			VertexArray &operator=(VertexArray &&other) noexcept;
+
 			~VertexArray();
 
 			void AddBuffer(Buffer *buffer, GLuint index) const;
 
 			void Bind() const;
-			void UnBind() const;
+			static void UnBind();
 
 		private:
-			GLuint mArrayID;
+			GLuint mArrayID{};
 			std::vector<Buffer*> mBuffers;
 		};
 	}

@@ -11,23 +11,89 @@ namespace sparky
 		void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 		void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
 
-		Window::Window(): mTitle(nullptr), m_Width(1280), mHeight(720), mClosed(false), mWindow(nullptr), mKeys{}, mMouseButtons{}, mX(0), mY(0)
+		// Default
+		Window::Window(): mTitle(nullptr), mWidth(1280), mHeight(720)
 		{
 		}
 
-		Window::Window(const char *name, const int width, const int height)
+		// Overload
+		Window::Window(const char *title, const int width, const int height)
+			: mTitle(title), mWidth(width), mHeight(height)
 		{
-			mTitle = name;
-			m_Width = width;
+			mTitle = title;
+			mWidth = width;
 			mHeight = height;
 			if (!Init())
 				glfwTerminate();
 
-			for (int i = 0; i < MAX_KEYS; i++)
-				mKeys[i] = false;
+			for (auto &mKey : mKeys)
+				mKey = false;
 
-			for (int i = 0; i < MAX_BUTTONS; i++)
-				mMouseButtons[i] = false;
+			for (auto &mMouseButton : mMouseButtons)
+				mMouseButton = false;
+		}
+
+		// Copy
+		Window::Window(const Window &other)
+		{
+			mWindow = other.mWindow;
+			mTitle = other.mTitle;
+			mClosed = other.mClosed;
+			mHeight = other.mHeight;
+			mWidth = other.mWidth;
+			mKeys[MAX_KEYS-1] = other.mKeys[MAX_KEYS-1];
+			mMouseButtons[MAX_BUTTONS-1] = other.mMouseButtons[MAX_BUTTONS-1];
+			mX = other.mX;
+			mY = other.mY;
+		}
+
+		// Copy assignment
+		Window &Window::operator=(Window other) noexcept
+		{
+			if (this != &other)
+			{
+				delete mTitle;
+				delete[] mKeys;
+				delete[] mMouseButtons;
+
+				mTitle = other.mTitle;
+				mKeys[MAX_KEYS - 1] = other.mKeys[MAX_KEYS - 1];
+				mMouseButtons[MAX_BUTTONS - 1] = other.mMouseButtons[MAX_BUTTONS - 1];
+			}
+
+			return *this;
+		}
+
+		// Move
+		Window::Window(Window && other) noexcept
+		{
+			mClosed = other.mClosed;
+			mHeight = other.mHeight;
+			mWidth = other.mWidth;
+			mKeys[MAX_KEYS - 1] = other.mKeys[MAX_KEYS - 1];
+			mMouseButtons[MAX_BUTTONS - 1] = other.mMouseButtons[MAX_BUTTONS - 1];
+			mX = other.mX;
+			mY = other.mY;
+
+			mWindow = nullptr;
+			mTitle = nullptr;
+		}
+
+		// Move assignment
+		Window &Window::operator=(Window &&other) noexcept
+		{
+			if (this != &other)
+			{
+				delete mTitle;
+				delete[] mKeys;
+				delete[] mMouseButtons;
+
+				mTitle = other.mTitle;
+				mKeys[MAX_KEYS - 1] = other.mKeys[MAX_KEYS - 1];
+				mMouseButtons[MAX_BUTTONS - 1] = other.mMouseButtons[MAX_BUTTONS - 1];
+			}
+
+			return *this;
 		}
 
 		Window::~Window()
@@ -37,14 +103,14 @@ namespace sparky
 
 		void Window::Update()
 		{
-			const GLenum error = glGetError();
+			const auto error = glGetError();
 			if (error != GL_NO_ERROR)
 			{
 				std::cout << "OpenGL Error: " << error << std::endl;
 			}
 
 			glfwPollEvents();
-			glfwGetFramebufferSize(mWindow, &m_Width, &mHeight);
+			glfwGetFramebufferSize(mWindow, &mWidth, &mHeight);
 			glfwSwapBuffers(mWindow);
 		}
 
@@ -58,7 +124,7 @@ namespace sparky
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		bool Window::isKeyPressed(const unsigned int keyCode) const
+		bool Window::IsKeyPressed(const unsigned int keyCode) const
 		{
 			// TODO: Log this
 			if (keyCode >= MAX_KEYS)
@@ -67,7 +133,7 @@ namespace sparky
 			return mKeys[keyCode];
 		}
 
-		bool Window::isMouseButtonPressed(const unsigned int button) const
+		bool Window::IsMouseButtonPressed(const unsigned int button) const
 		{
 			// TODO: Log this
 			if (button >= MAX_BUTTONS)
@@ -76,7 +142,7 @@ namespace sparky
 			return mMouseButtons[button];
 		}
 
-		void Window::getMousePosition(double &x, double &y) const
+		void Window::GetMousePosition(double &x, double &y) const
 		{
 			x = mX;
 			y = mY;
@@ -90,7 +156,7 @@ namespace sparky
 				return false;
 			}
 
-			mWindow = glfwCreateWindow(m_Width, mHeight, mTitle, nullptr, nullptr);
+			mWindow = glfwCreateWindow(mWidth, mHeight, mTitle, nullptr, nullptr);
 			
 			if (!mWindow)
 			{
@@ -125,19 +191,19 @@ namespace sparky
 
 		void key_callback(GLFWwindow *window, const int key, int scancode, const int action, int mods)
 		{
-			Window *win = static_cast<Window*>(glfwGetWindowUserPointer(window));
+			const auto win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 			win->mKeys[key] = action != GLFW_RELEASE;
 		}
 
 		void mouse_button_callback(GLFWwindow * window, const int button, const int action, int mods)
 		{
-			Window *win = static_cast<Window*>(glfwGetWindowUserPointer(window));
+			const auto win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 			win->mMouseButtons[button] = action != GLFW_RELEASE;
 		}
 
 		void cursor_position_callback(GLFWwindow * window, const double xpos, const double ypos)
 		{
-			Window *win = static_cast<Window*>(glfwGetWindowUserPointer(window));
+			const auto win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 			win->mX = xpos;
 			win->mY = ypos;
 		}

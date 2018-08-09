@@ -15,6 +15,15 @@ namespace sparky
 		{
 		public:
 			Shader(const char *vertexPath, const char *fragmentPath);
+
+			// Copy
+			Shader(const Shader &other);
+			Shader &operator=(const Shader &other);
+
+			// Move
+			Shader(Shader &&other) noexcept;
+			Shader &operator=(Shader &&other) noexcept;
+
 			~Shader();
 
 			void Enable() const;
@@ -23,8 +32,8 @@ namespace sparky
 			GLuint GetShaderID() const;
 
 			void SetUniformMatrix4(const GLchar *name, const Matrix4 &matrix) const;
-			void SetUniform1f(const GLchar *name, const float value) const;
-			void SetUniform1i(const GLchar *name, const int value) const;
+			void SetUniform1f(const GLchar *name, float value) const;
+			void SetUniform1i(const GLchar *name, int value) const;
 			void SetUniform2f(const GLchar *name, Vector2 &vector) const;
 			void SetUniform3f(const GLchar *name, Vector3 &vector) const;
 			void SetUniform4f(const GLchar *name, Vector4 &vector) const;			

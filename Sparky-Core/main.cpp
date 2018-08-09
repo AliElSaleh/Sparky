@@ -52,9 +52,9 @@ int main()
 	sprite2.AddBuffer(new Buffer(vertices, 4 * 3, 3), 0);
 	sprite2.AddBuffer(new Buffer(coloursB, 4 * 4, 4), 1);
 
-	const Matrix4 orthographic = Matrix4::Orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
-	Vector4 colour = Vector4(0.2f, 0.3f, 0.8f, 1.0f);
-	Vector2 lightPos = Vector2(4.0f, 1.5f);
+	const auto orthographic = Matrix4::Orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
+	auto colour = Vector4(0.2f, 0.3f, 0.8f, 1.0f);
+	auto lightPos = Vector2(4.0f, 1.5f);
 
 	Shader shader("src/graphics/basic.vert", "src/graphics/basic.frag");
 	shader.Enable();
@@ -67,11 +67,11 @@ int main()
 
 	while (!window.Closed())
 	{
-		window.Clear();
+		Window::Clear();
 
 
 		double x, y;
-		window.getMousePosition(x, y);
+		window.GetMousePosition(x, y);
 		Vector2 vector(float(x * 16.0f / 1280.0f), float(9.0f - y * 9.0f / 720.0f));
 		shader.SetUniform2f("light_pos", vector);
 
@@ -79,15 +79,15 @@ int main()
 		ibo.Bind();
 		shader.SetUniformMatrix4("ml_matrix", Matrix4::MakeTranslation(Vector3(4, 3, 0)));
 		glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_SHORT, nullptr);
-		ibo.UnBind();
-		sprite1.UnBind();
+		IndexBuffer::UnBind();
+		VertexArray::UnBind();
 
 		sprite2.Bind();
 		ibo.Bind();
 		shader.SetUniformMatrix4("ml_matrix", Matrix4::MakeTranslation(Vector3(0, 0, 0)));
 		glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_SHORT, nullptr);
-		ibo.UnBind();
-		sprite2.UnBind();
+		IndexBuffer::UnBind();
+		VertexArray::UnBind();
 
 
 		window.Update();

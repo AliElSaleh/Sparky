@@ -1,4 +1,4 @@
-#include "../../inc/graphics/buffers/IndexBuffer.h"
+#include "../../../inc/graphics/buffers/IndexBuffer.h"
 
 namespace sparky
 {
@@ -18,7 +18,7 @@ namespace sparky
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBufferID);
 		}
 
-		void IndexBuffer::UnBind() const
+		void IndexBuffer::UnBind()
 		{
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}

@@ -12,9 +12,9 @@ namespace sparky
 			IndexBuffer(GLushort *data, GLsizei count);
 
 			void Bind() const;
-			void UnBind() const;
+			static void UnBind();
 
-			inline GLuint GetCount() const { return mCount; }
+			GLuint GetCount() const { return mCount; }
 
 		private:
 			GLuint mBufferID;

@@ -14,7 +14,7 @@ namespace sparky
 			void Bind() const;
 			static void UnBind();
 
-			inline GLuint GetComponentCount() const { return mComponentCount; }
+			GLuint GetComponentCount() const { return mComponentCount; }
 
 		private:
 			GLuint mBufferID;

@@ -7,10 +7,62 @@ namespace sparky
 {
 	namespace graphics
 	{
-		Shader::Shader(const char *vertexPath, const char *fragPath)
-			: mVertexPath(vertexPath), mFragmentPath(fragPath)
+		Shader::Shader(const char *vertexPath, const char *fragmentPath)
+			: mVertexPath(vertexPath), mFragmentPath(fragmentPath)
 		{
 			mShaderID = Load();
+		}
+
+		// Copy constructor
+		Shader::Shader(const Shader & other)
+		{
+			mFragmentPath = other.mFragmentPath;
+			mShaderID = other.mShaderID;
+			mVertexPath = other.mVertexPath;			
+		}
+
+		// Copy assignment
+		Shader &Shader::operator=(const Shader & other)
+		{
+			if (this != &other)
+			{
+				delete mFragmentPath;
+				delete mVertexPath;
+
+				mShaderID = other.mShaderID;
+				mFragmentPath = other.mFragmentPath;
+				mVertexPath = other.mVertexPath;
+			}
+
+			return *this;
+		}
+
+		// Move constructor
+		Shader::Shader(Shader &&other) noexcept
+		{
+			mFragmentPath = other.mFragmentPath;
+			mShaderID = other.mShaderID;
+			mVertexPath = other.mVertexPath;
+
+			other.mFragmentPath = nullptr;
+			other.mVertexPath = nullptr;
+			other.mShaderID = 0;
+		}
+
+		// Move assignment
+		Shader &Shader::operator=(Shader && other) noexcept
+		{
+			if (this != &other)
+			{
+				delete mFragmentPath;
+				delete mVertexPath;
+
+				mShaderID = other.mShaderID;
+				mFragmentPath = other.mFragmentPath;
+				mVertexPath = other.mVertexPath;
+			}
+
+			return *this;
 		}
 
 		Shader::~Shader()
@@ -70,15 +122,15 @@ namespace sparky
 
 		GLuint Shader::Load() const
 		{
-			const GLuint program = glCreateProgram();
-			const GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
-			const GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
+			const auto program = glCreateProgram();
+			const auto vertex = glCreateShader(GL_VERTEX_SHADER);
+			const auto fragment = glCreateShader(GL_FRAGMENT_SHADER);
 
-			std::string vertexSourceString = read_file(mVertexPath).c_str();
-			std::string fragmentSourceString = read_file(mFragmentPath).c_str();
+			auto vertexSourceString = read_file(mVertexPath);
+			auto fragmentSourceString = read_file(mFragmentPath);
 
-			const char *vertexSource = vertexSourceString.c_str();
-			const char *fragmentSource = fragmentSourceString.c_str();
+			auto vertexSource = vertexSourceString.c_str();
+			auto fragmentSource = fragmentSourceString.c_str();
 
 			// Vertex
 			glShaderSource(vertex, 1, &vertexSource, nullptr);
